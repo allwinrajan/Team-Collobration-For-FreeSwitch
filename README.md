@@ -1,106 +1,141 @@
-Here’s your **Day 1 README.md** in one **single copyable Markdown block**:
+Here’s a clean, structured **Day 2 README.md** for your FreeSWITCH learning repo:
 
 ---
 
-````markdown
-# FreeSWITCH Learning – Day 1 🚀
+```markdown
+# FreeSWITCH Learning – Day 2
 
-Welcome to **Day 1** of learning **FreeSWITCH**, an open-source telephony platform designed to route and interconnect communication protocols. This repository will track my learning journey, practical exercises, and resources.
-
----
-
-## ✅ What is FreeSWITCH?
-
-FreeSWITCH is an **open-source telephony platform** that enables:
-- VoIP solutions (SIP, RTP, WebRTC)
-- PBX systems
-- IVR (Interactive Voice Response)
-- Conference bridges
-- Gateway services between VoIP and PSTN
+On Day 2, the focus is on understanding SIP profiles and creating a simple dialplan in FreeSWITCH.
 
 ---
 
-## 📌 Objectives for Day 1
-- Understand what FreeSWITCH is and why it’s used
-- Install FreeSWITCH on my system (Linux recommended)
-- Explore basic configuration files
-- Verify installation by starting the FreeSWITCH CLI
+## Objectives for Day 2
+
+- Understand what SIP profiles are and their role in FreeSWITCH
+- Explore default SIP profiles
+- Create a basic dialplan to handle calls
+- Verify configuration through FreeSWITCH CLI
 
 ---
 
-## 🛠 Prerequisites
-- **OS:** Ubuntu/Debian preferred
-- **Packages:** `git`, `wget`, `curl`, `build-essential`
-- Basic knowledge of **Linux commands**
+## What are SIP Profiles?
 
----
+SIP profiles define how FreeSWITCH communicates with SIP endpoints. They include:
+- **IP and Port Bindings** (e.g., `5060` for SIP)
+- **Authentication Settings**
+- **Transport Protocols** (UDP/TCP/TLS)
 
-## 📥 Installation Steps
+FreeSWITCH provides two default profiles:
+- **internal** – For local devices to register
+- **external** – For communicating with external gateways or carriers
 
-### 1. Update System
-```bash
-sudo apt update && sudo apt upgrade -y
+Profiles are located in:
+```
+
+/etc/freeswitch/sip\_profiles/
+
 ````
 
-### 2. Install Dependencies
+---
+
+## Explore SIP Profiles
+
+1. Navigate to the SIP profiles directory:
+```bash
+cd /etc/freeswitch/sip_profiles
+````
+
+2. Check the default internal profile:
 
 ```bash
-sudo apt install -y git wget curl gnupg2 lsb-release
+nano internal.xml
 ```
 
-### 3. Install FreeSWITCH
+3. Key parameters to review:
+
+* `<param name="sip-ip" value="auto"/>`
+* `<param name="rtp-ip" value="auto"/>`
+* `<param name="dialplan" value="XML"/>`
+
+---
+
+## Creating a Simple Dialplan
+
+Dialplans define how FreeSWITCH routes calls. Default dialplans are in:
+
+```
+/etc/freeswitch/dialplan/default/
+```
+
+### 1. Create a Test Extension
+
+Open the default dialplan:
 
 ```bash
-sudo apt install -y freeswitch freeswitch-mod-conference freeswitch-lang-en
+nano /etc/freeswitch/dialplan/default/01_test.xml
 ```
 
-### 4. Start FreeSWITCH
+Add the following content:
+
+```xml
+<extension name="hello-world">
+  <condition field="destination_number" expression="^1234$">
+    <action application="answer"/>
+    <action application="playback" data="ivr/ivr-welcome.wav"/>
+    <action application="hangup"/>
+  </condition>
+</extension>
+```
+
+This creates an extension **1234**. When dialed, it:
+
+* Answers the call
+* Plays a welcome audio file
+* Hangs up
+
+### 2. Reload the Dialplan
 
 ```bash
-sudo systemctl start freeswitch
-sudo fs_cli
+fs_cli -x "reloadxml"
 ```
 
-✅ If you see the FreeSWITCH CLI, you are ready!
+---
+
+## Testing
+
+1. Register a SIP client (e.g., Linphone or Zoiper) with the internal profile credentials.
+2. Dial **1234**.
+3. You should hear the welcome audio file.
 
 ---
 
-## 🔍 Explore
+## Resources
 
-* Configuration folder: `/etc/freeswitch/`
-* Main config: `freeswitch.xml`
-* SIP profiles: `/etc/freeswitch/sip_profiles/`
-
----
-
-## 📚 Resources
-
-* [Official FreeSWITCH Docs](https://freeswitch.com/confluence/)
-* [FreeSWITCH GitHub](https://github.com/signalwire/freeswitch)
+* [Dialplan Basics](https://freeswitch.com/confluence/display/FREESWITCH/Dialplan)
+* [SIP Profiles](https://freeswitch.com/confluence/display/FREESWITCH/SIP+Profiles)
 
 ---
 
-## ✅ Day 1 Summary
+## Day 2 Summary
 
-✔ Installed FreeSWITCH
-✔ Explored basic configs
-✔ Connected to FreeSWITCH CLI
-
----
-
-**Next Step (Day 2):** Learn about SIP profiles and creating a simple dialplan.
+* Understood SIP profiles and their role
+* Explored internal and external profiles
+* Created and tested a simple dialplan
 
 ---
 
-👉 *Follow this repo for daily updates on my FreeSWITCH learning journey!*
+### Next Steps (Day 3)
+
+* Explore user directory and authentication
+* Configure and register multiple SIP users
 
 ```
 
 ---
 
-✅ Copy this entire block and save it as **`README.md`** in your Day 1 folder.  
+✅ Save this as **`README.md`** inside your **Day 2 folder**.
 
 ---
 
-Do you want me to **prepare Day 2 README right now** or **create a 7-day complete roadmap README for the master repo**?
+👉 Do you want me to **prepare Day 3 README now** or **give you a full 7-day roadmap for the entire repo with folder structure and all README files**?
 ```
