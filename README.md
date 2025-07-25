@@ -1,4 +1,4 @@
-# FreeSWITCH Learning – Day 2
+# FreeSWITCH Learning – Day 1
 
 This repository documents my journey in learning FreeSWITCH, an open-source telephony platform. Each day, I will add new notes, configurations, and examples.
 
